@@ -7,13 +7,11 @@ typedef struct _pixel {
 } Pixel;
 
 typedef struct _image {
-    // [width][height][rgb]
-    // 0 -> r
-    // 1 -> g
-    // 2 -> b
     Pixel pixel[512][512];
     unsigned int width;
     unsigned int height;
+    char type[4];
+    int max_color;
 } Image;
 
 
@@ -33,14 +31,15 @@ int pixel_igual(Pixel p1, Pixel p2) {
 
 Image read_image() {
     Image img;
-
-    char p3[4];
-    scanf("%s", p3);
-
-    // read width height and color of image
-    int max_color;
-    scanf("%u %u %d", &img.width, &img.height, &max_color);
-
+    // FILE *debugLog = fopen("debug.log", "w");
+    scanf("%s", img.type);
+    scanf("%u %u", &img.width, &img.height);
+    scanf("%d", &img.max_color);
+    /*
+    fprintf (debugLog, "%s\n", img.type);
+    fprintf (debugLog, "%u %u\n", img.width, img.height);
+    fprintf (debugLog, "%d\n", img.max_color);
+    */
     // read all pixels of image
     for (unsigned int i = 0; i < img.height; ++i) {
         for (unsigned int j = 0; j < img.width; ++j) {
@@ -51,6 +50,25 @@ Image read_image() {
         }
     }
     return img;
+}
+
+void print_image(Image img) {
+
+    printf("P3\n");
+    printf("%u %u\n", img.width, img.height);
+    printf("255\n");
+
+    // print pixels of image
+    for (unsigned int i = 0; i < img.height; ++i) {
+        for (unsigned int j = 0; j < img.width; ++j) {
+            printf("%hu %hu %hu ", img.pixel[i][j].red,
+                                   img.pixel[i][j].green,
+                                   img.pixel[i][j].blue);
+
+        }
+        printf("\n");
+    }
+
 }
 
 Image escala_de_cinza(Image img) {
@@ -261,20 +279,6 @@ int main() {
 
     }
 
-    // print type of image
-    printf("P3\n");
-    // print width height and color of image
-    printf("%u %u\n255\n", img.width, img.height);
-
-    // print pixels of image
-    for (unsigned int i = 0; i < img.height; ++i) {
-        for (unsigned int j = 0; j < img.width; ++j) {
-            printf("%hu %hu %hu ", img.pixel[i][j].red,
-                                   img.pixel[i][j].green,
-                                   img.pixel[i][j].blue);
-
-        }
-        printf("\n");
-    }
+    print_image(img);
     return 0;
 }
