@@ -170,6 +170,39 @@ Image rotacionar90direita(Image img) {
     return rotacionada;
 }
 
+Image espelhamento(Image img) {
+     int horizontal = 0;
+     scanf("%d", &horizontal);
+
+     int w = img.width, h = img.height;
+
+     if (horizontal == 1) w /= 2;
+     else h /= 2;
+
+     for (int i2 = 0; i2 < h; ++i2) {
+         for (int j = 0; j < w; ++j) {
+            int x = i2, y = j;
+
+            if (horizontal == 1) y = img.width - 1 - j;
+            else x = img.height - 1 - i2;
+
+            Pixel aux1;
+            aux1.red = img.pixel[i2][y].red;
+            aux1.green = img.pixel[i2][y].green;
+            aux1.blue = img.pixel[i2][y].blue;
+
+            img.pixel[i2][y].red = img.pixel[x][y].red;
+            img.pixel[i2][y].green = img.pixel[x][y].green;
+            img.pixel[i2][y].blue = img.pixel[x][y].blue;
+
+            img.pixel[x][y].red = aux1.red;
+            img.pixel[x][y].green = aux1.green;
+            img.pixel[x][y].blue = aux1.blue;
+         }
+     }
+     return img;
+}
+
 void inverter_cores(Pixel pixel[512][512],
                     unsigned int w, unsigned int h) {
     for (unsigned int i = 0; i < h; ++i) {
@@ -231,35 +264,7 @@ int main() {
                 break;
             }
             case 5: { // Espelhamento
-                int horizontal = 0;
-                scanf("%d", &horizontal);
-
-                int w = img.width, h = img.height;
-
-                if (horizontal == 1) w /= 2;
-                else h /= 2;
-
-                for (int i2 = 0; i2 < h; ++i2) {
-                    for (int j = 0; j < w; ++j) {
-                        int x = i2, y = j;
-
-                        if (horizontal == 1) y = img.width - 1 - j;
-                        else x = img.height - 1 - i2;
-
-                        Pixel aux1;
-                        aux1.red = img.pixel[i2][y].red;
-                        aux1.green = img.pixel[i2][y].green;
-                        aux1.blue = img.pixel[i2][y].blue;
-
-                        img.pixel[i2][y].red = img.pixel[x][y].red;
-                        img.pixel[i2][y].green = img.pixel[x][y].green;
-                        img.pixel[i2][y].blue = img.pixel[x][y].blue;
-
-                        img.pixel[x][y].red = aux1.red;
-                        img.pixel[x][y].green = aux1.green;
-                        img.pixel[x][y].blue = aux1.blue;
-                    }
-                }
+                img = espelhamento(img);
                 break;
             }
             case 6: { // Inversao de Cores
