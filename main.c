@@ -55,7 +55,7 @@ Image escala_de_cinza(Image img) {
 }
 
 Image filtro_sepia(Image img) {
-     
+
      for (unsigned int x = 0; x < img.h; ++x) {
          for (unsigned int j = 0; j < img.w; ++j) {
             Pixel pixel;
@@ -112,13 +112,21 @@ Image rotacionar90direita(Image img) {
     rotacionada.w = img.h;
     rotacionada.h = img.w;
 
-    for (unsigned int i = 0, y = 0; i < rotacionada.h; ++i, ++y) {
-        for (int j = rotacionada.w - 1, x = 0; j >= 0; --j, ++x) {
-            rotacionada.pixel[i][j].red = img.pixel[x][y].red;
-            rotacionada.pixel[i][j].green = img.pixel[x][y].green;
-            rotacionada.pixel[i][j].blue = img.pixel[x][y].blue;
-        }
+    int quantas_vezes = 0;
+    scanf("%d", &quantas_vezes);
+    quantas_vezes %= 4;
+    for (int j = 0; j < quantas_vezes; ++j) {
+
+         for (unsigned int i = 0, y = 0; i < rotacionada.h; ++i, ++y) {
+              for (int j = rotacionada.w - 1, x = 0; j >= 0; --j, ++x) {
+                   rotacionada.pixel[i][j].red = img.pixel[x][y].red;
+                   rotacionada.pixel[i][j].green = img.pixel[x][y].green;
+                   rotacionada.pixel[i][j].blue = img.pixel[x][y].blue;
+              }
+         }
+
     }
+
 
     return rotacionada;
 }
@@ -196,12 +204,7 @@ int main() {
                 break;
             }
             case 4: { // Rotacao
-                int quantas_vezes = 0;
-                scanf("%d", &quantas_vezes);
-                quantas_vezes %= 4;
-                for (int j = 0; j < quantas_vezes; ++j) {
-                    img = rotacionar90direita(img);
-                }
+                img = rotacionar90direita(img);
                 break;
             }
             case 5: { // Espelhamento
