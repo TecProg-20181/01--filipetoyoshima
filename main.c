@@ -31,6 +31,27 @@ int pixel_igual(Pixel p1, Pixel p2) {
     return 0;
 }
 
+Image read_image() {
+    Image img;
+
+    char p3[4];
+    scanf("%s", p3);
+
+    // read width height and color of image
+    int max_color;
+    scanf("%u %u %d", &img.width, &img.height, &max_color);
+
+    // read all pixels of image
+    for (unsigned int i = 0; i < img.height; ++i) {
+        for (unsigned int j = 0; j < img.width; ++j) {
+            scanf("%hu %hu %hu", &img.pixel[i][j].red,
+                                 &img.pixel[i][j].green,
+                                 &img.pixel[i][j].blue);
+
+        }
+    }
+    return img;
+}
 
 Image escala_de_cinza(Image img) {
     /*for (unsigned int i = 0; i < img.height; ++i) {
@@ -163,23 +184,7 @@ Image cortar_imagem(Image img, int x, int y, int w, int h) {
 int main() {
     Image img;
 
-    // read type of image
-    char p3[4];
-    scanf("%s", p3);
-
-    // read width height and color of image
-    int max_color;
-    scanf("%u %u %d", &img.width, &img.height, &max_color);
-
-    // read all pixels of image
-    for (unsigned int i = 0; i < img.height; ++i) {
-        for (unsigned int j = 0; j < img.width; ++j) {
-            scanf("%hu %hu %hu", &img.pixel[i][j].red,
-                                 &img.pixel[i][j].green,
-                                 &img.pixel[i][j].blue);
-
-        }
-    }
+    img = read_image();
 
     int n_opcoes;
     scanf("%d", &n_opcoes);
