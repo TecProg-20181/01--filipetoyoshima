@@ -12,8 +12,8 @@ typedef struct _image {
     // 1 -> g
     // 2 -> b
     Pixel pixel[512][512];
-    unsigned int w;
-    unsigned int h;
+    unsigned int width;
+    unsigned int height;
 } Image;
 
 
@@ -33,14 +33,14 @@ int pixel_igual(Pixel p1, Pixel p2) {
 
 
 Image escala_de_cinza(Image img) {
-    /*for (unsigned int i = 0; i < img.h; ++i) {
-        for (unsigned int j = 0; j < img.w; ++j) {
+    /*for (unsigned int i = 0; i < img.height; ++i) {
+        for (unsigned int j = 0; j < img.width; ++j) {
             print("%u", img.pixel[i][j].red + img.pixel[i][j].green + img.pixel[i][j].blue);
         }
     }*/
 
-    for (unsigned int i = 0; i < img.h; ++i) {
-        for (unsigned int j = 0; j < img.w; ++j) {
+    for (unsigned int i = 0; i < img.height; ++i) {
+        for (unsigned int j = 0; j < img.width; ++j) {
             int media = img.pixel[i][j].red +
                         img.pixel[i][j].green +
                         img.pixel[i][j].blue;
@@ -56,24 +56,24 @@ Image escala_de_cinza(Image img) {
 
 Image filtro_sepia(Image img) {
 
-     for (unsigned int x = 0; x < img.h; ++x) {
-         for (unsigned int j = 0; j < img.w; ++j) {
+     for (unsigned int i = 0; i < img.height; ++i) {
+         for (unsigned int j = 0; j < img.width; ++j) {
             Pixel pixel;
-            pixel.red = img.pixel[x][j].red;
-            pixel.green = img.pixel[x][j].green;
-            pixel.blue = img.pixel[x][j].blue;
+            pixel.red = img.pixel[i][j].red;
+            pixel.green = img.pixel[i][j].green;
+            pixel.blue = img.pixel[i][j].blue;
 
             int p =  pixel.red * .393 + pixel.green * .769 + pixel.blue * .189;
             int menor_r = (255 >  p) ? p : 255;
-            img.pixel[x][j].red = menor_r;
+            img.pixel[i][j].red = menor_r;
 
             p =  pixel.red * .349 + pixel.green * .686 + pixel.blue * .168;
             menor_r = (255 >  p) ? p : 255;
-            img.pixel[x][j].green = menor_r;
+            img.pixel[i][j].green = menor_r;
 
             p =  pixel.red * .272 + pixel.green * .534 + pixel.blue * .131;
             menor_r = (255 >  p) ? p : 255;
-            img.pixel[x][j].blue = menor_r;
+            img.pixel[i][j].blue = menor_r;
          }
      }
      return img;
@@ -109,16 +109,16 @@ void blur(unsigned int h, Pixel pixel[512][512], int T, unsigned int w) {
 Image rotacionar90direita(Image img) {
     Image rotacionada;
 
-    rotacionada.w = img.h;
-    rotacionada.h = img.w;
+    rotacionada.width = img.height;
+    rotacionada.height = img.width;
 
     int quantas_vezes = 0;
     scanf("%d", &quantas_vezes);
     quantas_vezes %= 4;
     for (int j = 0; j < quantas_vezes; ++j) {
 
-         for (unsigned int i = 0, y = 0; i < rotacionada.h; ++i, ++y) {
-              for (int j = rotacionada.w - 1, x = 0; j >= 0; --j, ++x) {
+         for (unsigned int i = 0, y = 0; i < rotacionada.height; ++i, ++y) {
+              for (int j = rotacionada.width - 1, x = 0; j >= 0; --j, ++x) {
                    rotacionada.pixel[i][j].red = img.pixel[x][y].red;
                    rotacionada.pixel[i][j].green = img.pixel[x][y].green;
                    rotacionada.pixel[i][j].blue = img.pixel[x][y].blue;
@@ -145,8 +145,8 @@ void inverter_cores(Pixel pixel[512][512],
 Image cortar_imagem(Image img, int x, int y, int w, int h) {
     Image cortada;
 
-    cortada.w = w;
-    cortada.h = h;
+    cortada.width = w;
+    cortada.height = h;
 
     for(int i = 0; i < h; ++i) {
         for(int j = 0; j < w; ++j) {
@@ -169,11 +169,11 @@ int main() {
 
     // read width height and color of image
     int max_color;
-    scanf("%u %u %d", &img.w, &img.h, &max_color);
+    scanf("%u %u %d", &img.width, &img.height, &max_color);
 
     // read all pixels of image
-    for (unsigned int i = 0; i < img.h; ++i) {
-        for (unsigned int j = 0; j < img.w; ++j) {
+    for (unsigned int i = 0; i < img.height; ++i) {
+        for (unsigned int j = 0; j < img.width; ++j) {
             scanf("%hu %hu %hu", &img.pixel[i][j].red,
                                  &img.pixel[i][j].green,
                                  &img.pixel[i][j].blue);
@@ -200,7 +200,7 @@ int main() {
             case 3: { // Blur
                 int tamanho = 0;
                 scanf("%d", &tamanho);
-                blur(img.h, img.pixel, tamanho, img.w);
+                blur(img.height, img.pixel, tamanho, img.width);
                 break;
             }
             case 4: { // Rotacao
@@ -211,7 +211,7 @@ int main() {
                 int horizontal = 0;
                 scanf("%d", &horizontal);
 
-                int w = img.w, h = img.h;
+                int w = img.width, h = img.height;
 
                 if (horizontal == 1) w /= 2;
                 else h /= 2;
@@ -220,8 +220,8 @@ int main() {
                     for (int j = 0; j < w; ++j) {
                         int x = i2, y = j;
 
-                        if (horizontal == 1) y = img.w - 1 - j;
-                        else x = img.h - 1 - i2;
+                        if (horizontal == 1) y = img.width - 1 - j;
+                        else x = img.height - 1 - i2;
 
                         Pixel aux1;
                         aux1.red = img.pixel[i2][y].red;
@@ -240,7 +240,7 @@ int main() {
                 break;
             }
             case 6: { // Inversao de Cores
-                inverter_cores(img.pixel, img.w, img.h);
+                inverter_cores(img.pixel, img.width, img.height);
                 break;
             }
             case 7: { // Cortar Imagem
@@ -259,11 +259,11 @@ int main() {
     // print type of image
     printf("P3\n");
     // print width height and color of image
-    printf("%u %u\n255\n", img.w, img.h);
+    printf("%u %u\n255\n", img.width, img.height);
 
     // print pixels of image
-    for (unsigned int i = 0; i < img.h; ++i) {
-        for (unsigned int j = 0; j < img.w; ++j) {
+    for (unsigned int i = 0; i < img.height; ++i) {
+        for (unsigned int j = 0; j < img.width; ++j) {
             printf("%hu %hu %hu ", img.pixel[i][j].red,
                                    img.pixel[i][j].green,
                                    img.pixel[i][j].blue);
