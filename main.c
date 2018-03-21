@@ -54,6 +54,31 @@ Image escala_de_cinza(Image img) {
     return img;
 }
 
+Image filtro_sepia(Image img) {
+     
+     for (unsigned int x = 0; x < img.h; ++x) {
+         for (unsigned int j = 0; j < img.w; ++j) {
+            Pixel pixel;
+            pixel.red = img.pixel[x][j].red;
+            pixel.green = img.pixel[x][j].green;
+            pixel.blue = img.pixel[x][j].blue;
+
+            int p =  pixel.red * .393 + pixel.green * .769 + pixel.blue * .189;
+            int menor_r = (255 >  p) ? p : 255;
+            img.pixel[x][j].red = menor_r;
+
+            p =  pixel.red * .349 + pixel.green * .686 + pixel.blue * .168;
+            menor_r = (255 >  p) ? p : 255;
+            img.pixel[x][j].green = menor_r;
+
+            p =  pixel.red * .272 + pixel.green * .534 + pixel.blue * .131;
+            menor_r = (255 >  p) ? p : 255;
+            img.pixel[x][j].blue = menor_r;
+         }
+     }
+     return img;
+}
+
 void blur(unsigned int h, Pixel pixel[512][512], int T, unsigned int w) {
     for (unsigned int i = 0; i < h; ++i) {
         for (unsigned int j = 0; j < w; ++j) {
@@ -161,27 +186,7 @@ int main() {
                 break;
             }
             case 2: { // Filtro Sepia
-                for (unsigned int x = 0; x < img.h; ++x) {
-                    for (unsigned int j = 0; j < img.w; ++j) {
-                        Pixel pixel;
-                        pixel.red = img.pixel[x][j].red;
-                        pixel.green = img.pixel[x][j].green;
-                        pixel.blue = img.pixel[x][j].blue;
-
-                        int p =  pixel.red * .393 + pixel.green * .769 + pixel.blue * .189;
-                        int menor_r = (255 >  p) ? p : 255;
-                        img.pixel[x][j].red = menor_r;
-
-                        p =  pixel.red * .349 + pixel.green * .686 + pixel.blue * .168;
-                        menor_r = (255 >  p) ? p : 255;
-                        img.pixel[x][j].green = menor_r;
-
-                        p =  pixel.red * .272 + pixel.green * .534 + pixel.blue * .131;
-                        menor_r = (255 >  p) ? p : 255;
-                        img.pixel[x][j].blue = menor_r;
-                    }
-                }
-
+                img = filtro_sepia(img);
                 break;
             }
             case 3: { // Blur
