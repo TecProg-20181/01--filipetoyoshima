@@ -29,6 +29,7 @@ int pixel_igual(Pixel p1, Pixel p2) {
     return 0;
 }
 
+// I'm not gonna add a library just to use ONE method
 void strcpy(char * s1, char * s2) {
      int i = 0;
      while (s2[i] != '\0') {
@@ -82,7 +83,9 @@ void print_image(Image img) {
 Image escala_de_cinza(Image img) {
     /*for (unsigned int i = 0; i < img.height; ++i) {
         for (unsigned int j = 0; j < img.width; ++j) {
-            print("%u", img.pixel[i][j].red + img.pixel[i][j].green + img.pixel[i][j].blue);
+            print("%u", img.pixel[i][j].red +
+                        img.pixel[i][j].green +
+                        img.pixel[i][j].blue);
         }
     }*/
 
@@ -224,18 +227,24 @@ void inverter_cores(Pixel pixel[512][512],
     }
 }
 
-Image cortar_imagem(Image img, int x, int y, int w, int h) {
+Image cortar_imagem(Image img) {
+    int originX, originY;
+    int newWidth, newHeight;
     Image cortada;
+
+    scanf("%d %d", &originX, &originY);
+    scanf("%d %d", &newWidth, &newHeight);
+    
     cortada.max_color = img.max_color;
-    cortada.width = w;
-    cortada.height = h;
+    cortada.width = newWidth;
+    cortada.height = newHeight;
     strcpy(cortada.type, img.type);
 
-    for(int i = 0; i < h; ++i) {
-        for(int j = 0; j < w; ++j) {
-            cortada.pixel[i][j].red = img.pixel[i + y][j + x].red;
-            cortada.pixel[i][j].green = img.pixel[i + y][j + x].green;
-            cortada.pixel[i][j].blue = img.pixel[i + y][j + x].blue;
+    for(int i = 0; i < newHeight; ++i) {
+        for(int j = 0; j < newWidth; ++j) {
+            cortada.pixel[i][j].red = img.pixel[i + originY][j + originX].red;
+            cortada.pixel[i][j].green = img.pixel[i + originY][j + originX].green;
+            cortada.pixel[i][j].blue = img.pixel[i + originY][j + originX].blue;
         }
     }
 
@@ -283,12 +292,7 @@ int main() {
                 break;
             }
             case 7: { // Cortar Imagem
-                int x, y;
-                scanf("%d %d", &x, &y);
-                int w, h;
-                scanf("%d %d", &w, &h);
-
-                img = cortar_imagem(img, x, y, w, h);
+                img = cortar_imagem(img);
                 break;
             }
         }
