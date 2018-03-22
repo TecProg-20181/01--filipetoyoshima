@@ -35,7 +35,7 @@ void print_image(Image img);
 //Effects:
 Image escala_de_cinza(Image img);
 Image filtro_sepia(Image img);
-void blur(unsigned int h, Pixel pixel[512][512], int T, unsigned int w);
+Image blur(Image img);
 Image rotacionar90direita(Image img);
 Image espelhamento(Image img);
 Image inverter_cores(Image img);
@@ -63,9 +63,7 @@ int main() {
                     break;
                }
                case 3: { // Blur
-                    int tamanho = 0;
-                    scanf("%d", &tamanho);
-                    blur(img.height, img.pixel, tamanho, img.width);
+                    img = blur(img);
                     break;
                }
                case 4: { // Rotacao
@@ -193,31 +191,49 @@ Image filtro_sepia(Image img) {
      return img;
 }
 
-void blur(unsigned int h, Pixel pixel[512][512], int T, unsigned int w) {
-    for (unsigned int i = 0; i < h; ++i) {
-        for (unsigned int j = 0; j < w; ++j) {
-            Pixel media = {0, 0, 0};
+Image blur(Image img) {
+     Image blurred;
+     int blurScale;
 
-            int menor_h = (h - 1 > i + T/2) ? i + T/2 : h - 1;
-            int min_w = (w - 1 > j + T/2) ? j + T/2 : w - 1;
-            for(int x = (0 > i - T/2 ? 0 : i - T/2); x <= menor_h; ++x) {
-                for(int y = (0 > j - T/2 ? 0 : j - T/2); y <= min_w; ++y) {
-                    media.red += pixel[x][y].red;
-                    media.green += pixel[x][y].green;
-                    media.blue += pixel[x][y].blue;
-                }
-            }
+     scanf("%d", &blurScale);
+     blurred.width = img.width;
+     blurred.height = img.height;
+     blurred.max_color = img.max_color;
+     strcpy(blurred.type, img.type);
 
-            // printf("%u", media.r)
-            media.red /= T * T;
-            media.green /= T * T;
-            media.blue /= T * T;
+     for (short i = 0; i < img.height; i++) {
+          for (short j = 0; j < img.width; j++) {
+               int qPixels = 0;
+               Pixel media = {0, 0, 0};
 
-            pixel[i][j].red = media.red;
-            pixel[i][j].green = media.green;
-            pixel[i][j].blue = media.blue;
-        }
-    }
+               // Quadrant limits
+               int originX = i - blurScale/2;
+               int originY = j - blurScale/2;
+               int limitX = i + blurScale/2;
+               int limitY = j + blurScale/2;
+
+               // Calculating the media of the quadrant
+               for (; originX <= limitX; originX++) {
+                    if (originX > 0 && originX < img.width) {
+                         for (; originY <= limitY; originY ++) {
+                              if (originY > 0 && originY < img.height) {
+                                   media.red += img.pixel[originX][originY].red;
+                                   media.green += img.pixel[originX][originY].green;
+                                   media.blue += img.pixel[originX][originY].blue;
+                                   qPixels++;
+                              }
+                         }
+                    }
+               }
+
+               blurred.pixel[i][j].red = media.red / qPixels;
+               blurred.pixel[i][j].green = media.green / qPixels;
+               blurred.pixel[i][j].blue = media.blue / qPixels;
+
+          }
+     }
+
+     return blurred;
 }
 
 Image rotacionar90direita(Image img) {
