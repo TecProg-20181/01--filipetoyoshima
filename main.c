@@ -29,6 +29,14 @@ int pixel_igual(Pixel p1, Pixel p2) {
     return 0;
 }
 
+void strcpy(char * s1, char * s2) {
+     int i = 0;
+     while (s2[i] != '\0') {
+          s1[i] = s2[i];
+          i++;
+     }
+}
+
 Image read_image() {
     Image img;
     // FILE *debugLog = fopen("debug.log", "w");
@@ -54,9 +62,9 @@ Image read_image() {
 
 void print_image(Image img) {
 
-    printf("P3\n");
+    printf("%s\n", img.type);
     printf("%u %u\n", img.width, img.height);
-    printf("255\n");
+    printf("%d\n", img.max_color);
 
     // print pixels of image
     for (unsigned int i = 0; i < img.height; ++i) {
@@ -150,6 +158,8 @@ Image rotacionar90direita(Image img) {
 
     rotacionada.width = img.height;
     rotacionada.height = img.width;
+    rotacionada.max_color = img.max_color;
+    strcpy(rotacionada.type, img.type);
 
     int quantas_vezes = 0;
     scanf("%d", &quantas_vezes);
@@ -216,9 +226,10 @@ void inverter_cores(Pixel pixel[512][512],
 
 Image cortar_imagem(Image img, int x, int y, int w, int h) {
     Image cortada;
-
+    cortada.max_color = img.max_color;
     cortada.width = w;
     cortada.height = h;
+    strcpy(cortada.type, img.type);
 
     for(int i = 0; i < h; ++i) {
         for(int j = 0; j < w; ++j) {

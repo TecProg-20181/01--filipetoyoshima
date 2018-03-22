@@ -5,7 +5,7 @@ NOCOLOR='\033[0m'
 # -------------------
 
 # Compilando o código
-gcc main.c -o photopobre
+gcc main.c -w -o photopobre
 
 if [ ! -d "test" ]; then
 	mkdir test
