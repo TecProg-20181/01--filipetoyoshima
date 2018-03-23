@@ -17,25 +17,10 @@ typedef struct _image {
 } Image;
 
 
-/* //Non used function
-int max(int a, int b) {
-    if (a > b)
-        return a;
-    return b;
-} */
-/* //Non used function
-int pixel_igual(Pixel p1, Pixel p2) {
-    if (p1.red == p2.red &&
-        p1.green == p2.green &&
-        p1.blue == p2.blue)
-        return 1;
-    return 0;
-} */
-
-
 void strcpy(char * s1, char * s2);
 Image read_image();
 void print_image(Image img);
+
 //Effects:
 Image grey_scale(Image img);
 Image sepia_filter(Image img);
@@ -59,31 +44,31 @@ int main() {
           scanf("%d", &option);
 
           switch(option) {
-               case 1: { // Escala de Cinza
+               case 1: {
                     img = grey_scale(img);
                     break;
                }
-               case 2: { // Filtro Sepia
+               case 2: {
                     img = sepia_filter(img);
                     break;
                }
-               case 3: { // Blur
+               case 3: {
                     img = blur(img);
                     break;
                }
-               case 4: { // Rotacao
+               case 4: {
                     img = rotate_90_clockwise(img);
                     break;
                }
-               case 5: { // Espelhamento
+               case 5: {
                     img = mirroring(img);
                     break;
                }
-               case 6: { // Inversao de Cores
+               case 6: {
                     img = negative_color(img);
                     break;
                }
-               case 7: { // Cortar Imagem
+               case 7: {
                     img = cut_image(img);
                     break;
                }
@@ -96,7 +81,6 @@ int main() {
 }
 
 
-// I'm not gonna add a library just to use ONE method
 void strcpy(char * s1, char * s2) {
      int i = 0;
      while (s2[i] != '\0') {
@@ -108,17 +92,11 @@ void strcpy(char * s1, char * s2) {
 
 Image read_image() {
     Image img;
-    // FILE *debugLog = fopen("debug.log", "w");
+
     scanf("%s", img.type);
     scanf("%u %u", &img.width, &img.height);
     scanf("%d", &img.max_color);
-    /*
-    // testLog:
-    fprintf (debugLog, "%s\n", img.type);
-    fprintf (debugLog, "%u %u\n", img.width, img.height);
-    fprintf (debugLog, "%d\n", img.max_color);
-    */
-    // read all pixels of image
+
     for (unsigned int i = 0; i < img.height; ++i) {
         for (unsigned int j = 0; j < img.width; ++j) {
             scanf("%hu %hu %hu", &img.pixel[i][j].red,
@@ -137,7 +115,6 @@ void print_image(Image img) {
     printf("%u %u\n", img.width, img.height);
     printf("%d\n", img.max_color);
 
-    // print pixels of image
     for (unsigned int i = 0; i < img.height; ++i) {
         for (unsigned int j = 0; j < img.width; ++j) {
             printf("%hu %hu %hu ", img.pixel[i][j].red,
@@ -152,13 +129,6 @@ void print_image(Image img) {
 
 
 Image grey_scale(Image img) {
-    /*for (unsigned int i = 0; i < img.height; ++i) {
-        for (unsigned int j = 0; j < img.width; ++j) {
-            print("%u", img.pixel[i][j].red +
-                        img.pixel[i][j].green +
-                        img.pixel[i][j].blue);
-        }
-    }*/
 
     for (unsigned int i = 0; i < img.height; ++i) {
         for (unsigned int j = 0; j < img.width; ++j) {
@@ -262,10 +232,10 @@ Image rotate_90_clockwise(Image img) {
     rotated.max_color = img.max_color;
     strcpy(rotated.type, img.type);
 
-    int quantas_vezes = 0;
-    scanf("%d", &quantas_vezes);
-    quantas_vezes %= 4;
-    for (int j = 0; j < quantas_vezes; ++j) {
+    int qTurns = 0;
+    scanf("%d", &qTurns);
+    qTurns %= 4;
+    for (int j = 0; j < qTurns; ++j) {
 
          for (unsigned int i = 0, y = 0; i < rotated.height; ++i, ++y) {
               for (int j = rotated.width - 1, x = 0; j >= 0; --j, ++x) {
