@@ -17,9 +17,13 @@ typedef struct _image {
 } Image;
 
 
+//General functions
 void strcpy(char * s1, char * s2);
 Image read_image();
 void print_image(Image img);
+
+//Pixel manipulating
+Pixel sumpix(Pixel a, Pixel b);
 
 //Effects:
 Image grey_scale(Image img);
@@ -128,6 +132,17 @@ void print_image(Image img) {
 }
 
 
+Pixel sumpix(Pixel a, Pixel b) {
+     Pixel sum;
+
+     sum.red = a.red + b.red;
+     sum.green = a.green + b.green;
+     sum.blue = a.blue + b.blue;
+
+     return sum;
+}
+
+
 Image grey_scale(Image img) {
 
     for (unsigned int i = 0; i < img.height; ++i) {
@@ -207,9 +222,7 @@ Image blur(Image img) {
                // Calculating the media of the quadrant
                for (; originX <= limitX; originX++) {
                     for (; originY <= limitY; originY ++) {
-                         media.red += img.pixel[originX][originY].red;
-                         media.green += img.pixel[originX][originY].green;
-                         media.blue += img.pixel[originX][originY].blue;
+                         media = sumpix(media, img.pixel[originX][originY]);
                          qPixels++;
                     }
                }
