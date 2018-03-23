@@ -266,30 +266,32 @@ Image mirroring(Image img) {
      int horizontal = 0;
      scanf("%d", &horizontal);
 
-     int w = img.width, h = img.height;
+     int horizontalLimit = img.width;
+     int verticalLimit = img.height;
+     if (horizontal == 1) horizontalLimit /= 2;
+     else verticalLimit /= 2;
 
-     if (horizontal == 1) w /= 2;
-     else h /= 2;
+     for (int i = 0; i < verticalLimit; ++i) {
+         for (int j = 0; j < horizontalLimit; ++j) {
+            int x = i, y = j;
 
-     for (int i2 = 0; i2 < h; ++i2) {
-         for (int j = 0; j < w; ++j) {
-            int x = i2, y = j;
+            if (horizontal == 1) {
+                  y = img.width - 1 - j;
+            } else {
+                  x = img.height - 1 - i;
+            }
+            Pixel aux;
+            aux.red = img.pixel[i][y].red;
+            aux.green = img.pixel[i][y].green;
+            aux.blue = img.pixel[i][y].blue;
 
-            if (horizontal == 1) y = img.width - 1 - j;
-            else x = img.height - 1 - i2;
+            img.pixel[i][y].red = img.pixel[x][y].red;
+            img.pixel[i][y].green = img.pixel[x][y].green;
+            img.pixel[i][y].blue = img.pixel[x][y].blue;
 
-            Pixel aux1;
-            aux1.red = img.pixel[i2][y].red;
-            aux1.green = img.pixel[i2][y].green;
-            aux1.blue = img.pixel[i2][y].blue;
-
-            img.pixel[i2][y].red = img.pixel[x][y].red;
-            img.pixel[i2][y].green = img.pixel[x][y].green;
-            img.pixel[i2][y].blue = img.pixel[x][y].blue;
-
-            img.pixel[x][y].red = aux1.red;
-            img.pixel[x][y].green = aux1.green;
-            img.pixel[x][y].blue = aux1.blue;
+            img.pixel[x][y].red = aux.red;
+            img.pixel[x][y].green = aux.green;
+            img.pixel[x][y].blue = aux.blue;
          }
      }
      return img;
