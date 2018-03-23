@@ -218,21 +218,29 @@ Image blur(Image img) {
 
                // Quadrant limits
                int originX = i - blurScale/2;
+               if (originX < 0) {
+                    originX = 0;
+               }
                int originY = j - blurScale/2;
+               if (originY < 0) {
+                    originY = 0;
+               }
                int limitX = i + blurScale/2;
+               if (limitX > img.width) {
+                    limitX = img.width - 1;
+               }
                int limitY = j + blurScale/2;
+               if (limitY > img.height) {
+                    limitY = img.height - 1;
+               }
 
                // Calculating the media of the quadrant
                for (; originX <= limitX; originX++) {
-                    if (originX > 0 && originX < img.width) {
-                         for (; originY <= limitY; originY ++) {
-                              if (originY > 0 && originY < img.height) {
-                                   media.red += img.pixel[originX][originY].red;
-                                   media.green += img.pixel[originX][originY].green;
-                                   media.blue += img.pixel[originX][originY].blue;
-                                   qPixels++;
-                              }
-                         }
+                    for (; originY <= limitY; originY ++) {
+                         media.red += img.pixel[originX][originY].red;
+                         media.green += img.pixel[originX][originY].green;
+                         media.blue += img.pixel[originX][originY].blue;
+                         qPixels++;
                     }
                }
 
