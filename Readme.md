@@ -44,7 +44,7 @@ O seu programa deve ser executado da seguinte forma:
 ```
 cat lena.ppm entrada.txt | ./photopobre > saida.ppm
 ```
-Este comando irá inserir na entrada do seu programa a imagem “lena.ppm” 
+Este comando irá inserir na entrada do seu programa a imagem “lena.ppm”
 e o que estiver escrito no arquvido de entrada.txt.
 Este arquivo de entrada pode ser utilizado para descrever quantas e quais
 operações vão ser feitas nesta imagem. Por exemplo:
@@ -88,3 +88,17 @@ o RGB, do inglês Red, Green e Blue (Vermelho, Verde e Azul).
 Cada componente varia de 0 a 255, sendo 0 a ausência daquela cor,
 e 255 a total presença daquela cor.
 
+Script de Testes
+------
+Após realizar modificações, para testar as saídas de maneira automatizada **crie um diretório chamado test** e execute o arquivo `test.sh`. (A criação do diretório só precisa ser feita caso não exista)
+
+```
+mkdir test
+./test.sh
+```
+
+**Obs:** Em algumas distros, como Ubuntu 16.04, pode ser necessário conceder a permissão para que o arquivo execute os comandos. Para isso, antes de executar o script, utilize o comando:
+```
+chmod +x test.sh
+```
+Ps: o método *blur* costuma fornecer resultados diferentes do esperado com qualquer alteração, mas que ainda são aceitáveis como uma função de borrar. Caso o script de testes acuse erro, cheque `test/blur.ppm` manualmente e use de bom senso para determinar se a imagem é aceitável ou não.
