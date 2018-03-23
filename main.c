@@ -1,10 +1,12 @@
 #include <stdio.h>
 
+
 typedef struct _pixel {
     unsigned short int red;
     unsigned short int green;
     unsigned short int blue;
 } Pixel;
+
 
 typedef struct _image {
     Pixel pixel[512][512];
@@ -13,6 +15,7 @@ typedef struct _image {
     char type[4];
     int max_color;
 } Image;
+
 
 /* //Non used function
 int max(int a, int b) {
@@ -29,6 +32,7 @@ int pixel_igual(Pixel p1, Pixel p2) {
     return 0;
 } */
 
+
 void strcpy(char * s1, char * s2);
 Image read_image();
 void print_image(Image img);
@@ -40,6 +44,7 @@ Image rotate_90_clockwise(Image img);
 Image mirroring(Image img);
 Image negative_color(Image img);
 Image cut_image(Image img);
+
 
 int main() {
      Image img;
@@ -90,6 +95,7 @@ int main() {
      return 0;
 }
 
+
 // I'm not gonna add a library just to use ONE method
 void strcpy(char * s1, char * s2) {
      int i = 0;
@@ -98,6 +104,7 @@ void strcpy(char * s1, char * s2) {
           i++;
      }
 }
+
 
 Image read_image() {
     Image img;
@@ -123,6 +130,7 @@ Image read_image() {
     return img;
 }
 
+
 void print_image(Image img) {
 
     printf("%s\n", img.type);
@@ -141,6 +149,7 @@ void print_image(Image img) {
     }
 
 }
+
 
 Image grey_scale(Image img) {
     /*for (unsigned int i = 0; i < img.height; ++i) {
@@ -162,9 +171,9 @@ Image grey_scale(Image img) {
             img.pixel[i][j].blue = media;
         }
     }
-
     return img;
 }
+
 
 Image sepia_filter(Image img) {
 
@@ -190,6 +199,7 @@ Image sepia_filter(Image img) {
      }
      return img;
 }
+
 
 Image blur(Image img) {
      Image blurred;
@@ -232,9 +242,9 @@ Image blur(Image img) {
 
           }
      }
-
      return blurred;
 }
+
 
 Image rotate_90_clockwise(Image img) {
     Image rotated;
@@ -258,9 +268,9 @@ Image rotate_90_clockwise(Image img) {
          }
 
     }
-
     return rotated;
 }
+
 
 Image mirroring(Image img) {
      int horizontal = 0;
@@ -297,6 +307,7 @@ Image mirroring(Image img) {
      return img;
 }
 
+
 Image negative_color(Image img) {
     for (unsigned int i = 0; i < img.height; ++i) {
         for (unsigned int j = 0; j < img.width; ++j) {
@@ -307,6 +318,7 @@ Image negative_color(Image img) {
     }
     return img;
 }
+
 
 Image cut_image(Image img) {
     int originX, originY;
@@ -328,6 +340,5 @@ Image cut_image(Image img) {
             cuted.pixel[i][j].blue = img.pixel[i + originY][j + originX].blue;
         }
     }
-
     return cuted;
 }
