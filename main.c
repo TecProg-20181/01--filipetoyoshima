@@ -155,15 +155,15 @@ Image sepia_filter(Image img) {
             pixel.blue = img.pixel[i][j].blue;
 
             int p =  pixel.red * .393 + pixel.green * .769 + pixel.blue * .189;
-            int menor_r = (255 >  p) ? p : 255;
+            int menor_r = (img.max_color >  p) ? p : img.max_color;
             img.pixel[i][j].red = menor_r;
 
             p =  pixel.red * .349 + pixel.green * .686 + pixel.blue * .168;
-            menor_r = (255 >  p) ? p : 255;
+            menor_r = (img.max_color >  p) ? p : img.max_color;
             img.pixel[i][j].green = menor_r;
 
             p =  pixel.red * .272 + pixel.green * .534 + pixel.blue * .131;
-            menor_r = (255 >  p) ? p : 255;
+            menor_r = (img.max_color >  p) ? p : img.max_color;
             img.pixel[i][j].blue = menor_r;
          }
      }
@@ -289,9 +289,9 @@ Image mirroring(Image img) {
 Image negative_color(Image img) {
     for (unsigned int i = 0; i < img.height; ++i) {
         for (unsigned int j = 0; j < img.width; ++j) {
-            img.pixel[i][j].red = 255 - img.pixel[i][j].red;
-            img.pixel[i][j].green = 255 - img.pixel[i][j].green;
-            img.pixel[i][j].blue = 255 - img.pixel[i][j].blue;
+            img.pixel[i][j].red = img.max_color - img.pixel[i][j].red;
+            img.pixel[i][j].green = img.max_color - img.pixel[i][j].green;
+            img.pixel[i][j].blue = img.max_color - img.pixel[i][j].blue;
         }
     }
     return img;
