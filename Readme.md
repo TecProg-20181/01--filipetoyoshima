@@ -90,12 +90,12 @@ e 255 a total presença daquela cor.
 
 Script de Testes
 ------
-Após realizar modificações, para testar as saídas de maneira automatizada **crie um diretório chamado test** e execute o arquivo `test.sh`. (A criação do diretório só precisa ser feita caso não exista)
+Após realizar modificações, para testar as saídas de maneira automatizada execute o arquivo `test.sh`.
 
 ```
-mkdir test
 ./test.sh
 ```
+O script de teste criará um diretório chamado `test/` e lá criará imagens a partir da `lena/lena.ppm` aplicando todas as funções da `main.c` usando como parâmetros os arquivos `.txt` do diretório `lena/`. Além de imagens `.ppm` o teste também criará um `.log` para cada teste executado que consiste de um `diff` do terminal entre a imagem gerada pelo teste e a imagem esperada `lena/<effeito aplicado>.ppm`.
 
 **Obs:** Em algumas distros, como Ubuntu 16.04, pode ser necessário conceder a permissão para que o arquivo execute os comandos. Para isso, antes de executar o script, utilize o comando:
 ```

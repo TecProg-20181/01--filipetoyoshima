@@ -51,7 +51,7 @@ diff lena/escala_cinza.ppm test/escala_cinza.ppm > test/escala_cinza.log
 FILESIZE=$(stat -c%s test/escala_cinza.log)
 if [ "$FILESIZE" -gt 0 ]; then
 			echo -e "${RED}escala_cinza está diferente"
-               echo -e "${RED}cheque test/escala_cinza.log"
+			echo -e "${RED}cheque test/escala_cinza.log"
 		else
 			echo -e "${GREEN}escala_cinza está ok"
 		fi
@@ -62,7 +62,7 @@ diff lena/espelhamento_vertical.ppm test/espelhamento_vertical.ppm > test/espelh
 FILESIZE=$(stat -c%s test/espelhamento_vertical.log)
 if [ "$FILESIZE" -gt 0 ]; then
 			echo -e "${RED}espelhamento_vertical está diferente"
-               echo -e "${RED}cheque test/espelhamento_vertical.log"
+			echo -e "${RED}cheque test/espelhamento_vertical.log"
 		else
 			echo -e "${GREEN}espelhamento_vertical está ok"
 		fi
@@ -73,7 +73,7 @@ diff lena/rotacao_90.ppm test/rotacao_90.ppm > test/rotacao_90.log
 FILESIZE=$(stat -c%s test/rotacao_90.log)
 if [ "$FILESIZE" -gt 0 ]; then
 			echo -e "${RED}rotacao_90 está diferente"
-               echo -e "${RED}cheque test/rotacao_90.log"
+			echo -e "${RED}cheque test/rotacao_90.log"
 		else
 			echo -e "${GREEN}rotacao_90 está ok"
 		fi
@@ -84,7 +84,7 @@ diff lena/sepia.ppm test/sepia.ppm > test/sepia.log
 FILESIZE=$(stat -c%s test/sepia.log)
 if [ "$FILESIZE" -gt 0 ]; then
 			echo -e "${RED}sepia está diferente"
-               echo -e "${RED}cheque test/sepia.log"
+			echo -e "${RED}cheque test/sepia.log"
 		else
 			echo -e "${GREEN}sepia está ok"
 		fi
